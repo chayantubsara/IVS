@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <title>Investor Dashboard | Smart Investment System</title>
+    
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2620/2620582.png">
+
+    <style>
+        /* รีเซ็ตค่าพื้นฐานเพื่อการแสดงผลแบบ Full Screen */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* ป้องกัน scrollbar ซ้อน */
+            background-color: #f4f7f6; /* สีพื้นหลังโทนสะอาดตา */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* ตกแต่ง Loading Screen ระหว่างรอโหลด GAS */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            background: #ffffff;
+        }
+
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #2c3e50;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ปรับแต่ง iFrame ให้เต็มจอและลื่นไหล */
+        iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="loading-screen" id="loader">
+        <div class="spinner"></div>
+        <p style="margin-top: 15px; color: #2c3e50; font-weight: 500;">เข้าสู่ระบบจัดการการลงทุน...</p>
+    </div>
+
+    <iframe 
+        src="https://script.google.com/macros/s/AKfycbz21m8SDSNWkLZcWEk6DgSVT_GAbzIY05gKJHEcWBd83N2TmbG_ZNp3t2lBYHdgZuyN/exec?page=investor" 
+        allow="geolocation; microphone; camera; midi; encrypted-media;"
+        onload="hideLoader()">
+    </iframe>
+
+    <script>
+        function hideLoader() {
+            // ซ่อนตัวหมุนเมื่อ iFrame โหลดเสร็จ
+            document.getElementById('loader').style.display = 'none';
+        }
+
+        // ป้องกันการ Zoom เมื่อกด double tap (เฉพาะ Safari บาง version)
+        document.addEventListener('touchstart', function (event) {
+            if (event.touches.length > 1) {
+                event.preventDefault();
+            }
+        }, { passive: false });
+    </script>
+</body>
+</html>
